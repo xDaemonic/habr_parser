@@ -4,9 +4,33 @@ services:
   app:
     build:
       dockerfile: ./docker/Dockerfile
-    shm_size: 2gb
+    container_name: habr_parser
     volumes:
-      - ./scrap.py:/scrap.py
-      - ./screenshots:/screenshots:cached
-    command: 'python3 scrap.py'
-    
+      - ./:/app
+    command: 'python3 /app/bot.py >> /app/log/bot.log 2>&1 && tail -F anything' #python3 /app/bot.py >> /app/log/bot.log 2>&1 && 
+    networks:
+      - habr_p_net
+  
+  database:
+    image: "mysql/mysql-server:8.0"
+    container_name: habr_parser_db
+    volumes:
+      - habr_p_db:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password && --character-set-server=utf8mb3_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    expose:
+      - 3306
+    networks:
+      - habr_p_net
+
+networks:
+  habr_p_net:
+    driver: bridge
+
+volumes:
+  habr_p_db:
+    external: true
