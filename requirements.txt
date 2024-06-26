@@ -1,12 +1,11 @@
-# selenium==4.17.2
-eloquent==0.5
-pymysql==1.1.1
-beautifulsoup4==4.12.3
-lxml==5.2.2
-urllib3==2.2.2
-requests==2.32.3
-mysql-connector-python-rf==2.2.2
-numpy==1.24.3
-python-dotenv==1.0.1
-telebot==0.0.5
-pyTelegramBotAPI==4.20.0
+asyncpg
+aiogram
+APScheduler
+python-decouple
+asyncpg-lite
+beautifulsoup4
+lxml
+requests
+html5lib
+fake-headers
+psycopg2

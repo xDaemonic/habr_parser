@@ -1,4 +1,5 @@
 .DS_Store
 .env
-habra_parser
 venv
+test.py
+__pycache__

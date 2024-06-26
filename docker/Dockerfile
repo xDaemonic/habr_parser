@@ -1,38 +1,38 @@
-FROM ubuntu:20.04
+FROM python:3.12.4-alpine3.19
 
-RUN apt-get update && apt-get install -y software-properties-common
-RUN add-apt-repository main
-RUN add-apt-repository universe
+RUN set -eux; \
+	\
+	apk add --no-cache --virtual .build-deps \
+		gnupg \
+		tar \
+		xz \
+		\
+		bluez-dev \
+		bzip2-dev \
+		dpkg-dev dpkg \
+		expat-dev \
+		findutils \
+		gcc \
+		gdbm-dev \
+		libc-dev \
+		libffi-dev \
+		libnsl-dev \
+		libtirpc-dev \
+		linux-headers \
+		make \
+		ncurses-dev \
+		openssl-dev \
+		pax-utils \
+		readline-dev \
+		sqlite-dev \
+		tcl-dev \
+		tk \
+		tk-dev \
+		util-linux-dev \
+		xz-dev \
+		zlib-dev \
+    postgresql-dev
 
-RUN apt-get update && apt-get install -y apt-transport-https \
-    curl \
-    python3 \
-    python3-pip \
-    wget \
-    unzip \
-    git \
-    build-essential \
-    libgconf-2-4 \ 
-    libnss3 \
-    libxss1 \
-    xvfb \
-    libxi6
-
-
-# RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
-
-# RUN brew install python@3.12
-# ENV PATH="/usr/local/opt/python@3.12/bin:${PATH}"
-
-# Install Chrome WebDriver
-# RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \ 
-#     && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-# RUN apt-get update && apt-get -y install google-chrome-stable
-
-# Install python requirements
-# RUN python3 -m venv --without-pip venv
-COPY requirements.txt /
-WORKDIR /
-# RUN pip3 install --no-cache --target="/venv/lib/python3.12/site-packages" -r requirements.txt
+WORKDIR /app
+COPY requirements.txt /app
 RUN pip3 install -r requirements.txt

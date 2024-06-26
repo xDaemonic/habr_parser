@@ -1,5 +1,4 @@
-Simple selenium build based on ubuntu:20.04 and ChromeDriver 121.0.6167.85
-
-
+dev...
+- docker volume create habr_p_db
 - docker compose build
 - docker compose up [-d]
